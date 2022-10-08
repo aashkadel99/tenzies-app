@@ -6,11 +6,20 @@ import Die from "./components/Die"
 function App() {
 
   function allNewDice(){
-    const newDice = []
+    
+    let diceObjectContainer = []
+    let newDice = {value: 0, isHeld: false}
+
     for(let i = 0; i < 10; i++){
-      newDice.push(Math.ceil(Math.random() * 6))
-    }
-    return newDice
+        diceObjectContainer.push(
+          newDice = {
+            ...newDice,
+            value: Math.ceil(Math.random() * 6)
+
+          }
+        )
+      }
+    return diceObjectContainer
   }
 
   const [loadDice, setLoadDice] = useState(allNewDice())
@@ -19,7 +28,7 @@ function App() {
     return (
       <Die
         key = {index}
-        value = {dice}
+        value = {dice.value}
       />
     )
   })
