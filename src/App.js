@@ -1,9 +1,25 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import './style.css';
 import Die from "./components/Die"
 
 
 function App() {
+
+  const [loadDice, setLoadDice] = useState(allNewDice())
+  const [tenzies, setTenzies] = useState(false)
+
+  useEffect(() => {
+    const allHeld = loadDice.every(dice => dice.isHeld)
+    const firstValue = loadDice[0]
+    const allSameValue = loadDice.every(dice => dice.value === firstValue)
+
+    if (allHeld && firstValue){
+      setTenzies(true)
+      console.log("You won!")
+    }
+
+  }, [loadDice])
+
 
   function allNewDice(){    
     let diceObjectContainer = []
@@ -24,9 +40,6 @@ function App() {
     return diceObjectContainer
   }
 
-  const [loadDice, setLoadDice] = useState(allNewDice())
-
-  
 
   const allDice = loadDice.map((dice) => {
     return (
