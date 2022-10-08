@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import './style.css';
 import Die from "./components/Die"
 
@@ -7,6 +7,7 @@ function App() {
 
   const [loadDice, setLoadDice] = useState(allNewDice())
   const [tenzies, setTenzies] = useState(false)
+  let buttonText = useRef("Roll")
 
   useEffect(() => {
     const allHeld = loadDice.every(dice => dice.isHeld)
@@ -15,7 +16,7 @@ function App() {
 
     if (allHeld && firstValue){
       setTenzies(true)
-      console.log("You won!")
+      buttonText.current = "New Game"
     }
 
   }, [loadDice])
@@ -85,7 +86,7 @@ function App() {
       <div className="dice-container">
         {allDice}
       </div>
-      <button className = "roll-button" onClick = {() => rollNewSet()}>Roll</button>
+      <button className = "roll-button" onClick = {() => rollNewSet()}>{buttonText.current}</button>
     </main>
   );
 }
