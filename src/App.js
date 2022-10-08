@@ -7,7 +7,6 @@ function App() {
 
   const [loadDice, setLoadDice] = useState(allNewDice())
   const [tenzies, setTenzies] = useState(false)
-  let buttonText = useRef("Roll")
 
   useEffect(() => {
     const allHeld = loadDice.every(dice => dice.isHeld)
@@ -16,7 +15,6 @@ function App() {
 
     if (allHeld && firstValue){
       setTenzies(true)
-      buttonText.current = "New Game"
     }
 
   }, [loadDice])
@@ -75,6 +73,11 @@ function App() {
     }))
   }
 
+  function startNewGame(){
+    setLoadDice(allNewDice())
+    setTenzies(false)
+  }
+
   return (
     <main className="app">
       <div className = "heading">
@@ -86,7 +89,11 @@ function App() {
       <div className="dice-container">
         {allDice}
       </div>
-      <button className = "roll-button" onClick = {() => rollNewSet()}>{buttonText.current}</button>
+      <button 
+      className = "roll-button" 
+      onClick = {() => tenzies ? startNewGame() : rollNewSet()}>
+       {tenzies ? "New Game" : "Roll"}
+      </button>
     </main>
   );
 }
